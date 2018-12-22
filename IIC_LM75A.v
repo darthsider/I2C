@@ -15,7 +15,7 @@
 *
 */
 
-module IIC_LM75A(clk,reset,scl,sda,dig,seg);
+module IIC_LM75A(clk,reset,scl,sda,dig,seg,data_tb,address_tb);
 
 input clk; //FPGA clock
 input reset; //Reset
@@ -25,6 +25,8 @@ inout  sda;// SDA data
 output reg [3:0] dig; //Seven segment display enable
 output reg [7:0] seg; //Seven segment
 
+output [15:0] data_tb; //data debug signal for testbench
+output [7:0] address_tb; //address debug signal for testbench
 
 localparam [3:0] idle = 4'd0,
                  start = 4'd1,
@@ -245,6 +247,8 @@ end
 
 
 assign sda = sda_link ? sda_reg: 1'bz;
+assign data_tb = data_reg; //for checking the data in testbench
+assign address_tb = address_reg;
 
 
 always @(posedge clk) begin
